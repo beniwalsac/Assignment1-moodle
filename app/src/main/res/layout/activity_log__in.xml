@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -63,6 +63,14 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remember username"
+                android:textSize="20dp"
+                android:layout_marginTop="16dp"
+                android:id="@+id/checkBox" />
+
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
@@ -71,6 +79,15 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hyperlink"
+                android:id="@+id/textView"
+                android:textSize="20dp"
+                android:layout_marginTop="16dp"
+                android:textColor="#021ef4"/>
 
         </LinearLayout>
     </ScrollView>
