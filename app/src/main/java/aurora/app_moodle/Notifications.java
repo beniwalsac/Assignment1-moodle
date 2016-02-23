@@ -16,7 +16,7 @@ public class Notifications extends ListFragment{
     Bundle data;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         data = getArguments();
-        View rootview = inflater.inflate(R.layout.grades, container, false);
+        View rootview = inflater.inflate(R.layout.notifications, container, false);
         return rootview;
     }
 
