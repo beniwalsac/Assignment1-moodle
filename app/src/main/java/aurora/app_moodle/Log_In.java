@@ -3,6 +3,7 @@ package aurora.app_moodle;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.webkit.CookieSyncManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -29,6 +31,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.CookieManager;
+import java.net.CookieStore;
+import java.util.Map;
+
 public class Log_In extends AppCompatActivity {
 
     private AutoCompleteTextView mUsernameView;
@@ -40,6 +46,7 @@ public class Log_In extends AppCompatActivity {
     public static boolean success;
     public static JSONObject user_data;
     public static TextView hyper_link;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +104,7 @@ public class Log_In extends AppCompatActivity {
 
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
-        String url = "http://10.0.2.2:8000/default/login.json?userid="+username+"&password="+password;
+        String url = "http://tapi.cse.iitd.ernet.in:1805/default/login.json?userid="+username+"&password="+password;
         boolean cancel = false;
         View focusView = null;
 
@@ -122,7 +129,21 @@ public class Log_In extends AppCompatActivity {
         } else {
             System.out.println("Completes input validation");
             showProgress(true);
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            NetworkController.getInstance().functionForVolleyRequest(url, this, new DataCallback() {
+                @Override
+                public void onSuccess(String result) {
+                    System.out.println("starts the show response function");
+                    showResponse(result);
+                }
+            }, new ErrorResponse() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    showProgress(false);
+                    System.out.println("doesn't get to the link");
+                    Toast.makeText(Log_In.this, volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+            /*RequestQueue requestQueue = Volley.newRequestQueue(this);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
@@ -139,7 +160,7 @@ public class Log_In extends AppCompatActivity {
                     Toast.makeText(Log_In.this, error.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
-            requestQueue.add(stringRequest);
+            requestQueue.add(stringRequest);*/
         }
 
     }
@@ -168,6 +189,10 @@ public class Log_In extends AppCompatActivity {
                 user_data = jsonObject.getJSONObject(key_user);
                 System.out.println("Successfull entry");
                 System.out.println(user_data.length());
+                Intent intent = new Intent(this,HomePage.class);
+                intent.putExtra("product", user_data.toString());
+                startActivity(intent);
+                this.finish();
                 //start the next activity
             }
         } catch (JSONException e) {
