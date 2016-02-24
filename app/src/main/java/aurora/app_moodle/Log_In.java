@@ -104,7 +104,7 @@ public class Log_In extends AppCompatActivity {
 
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
-        String url = "http://tapi.cse.iitd.ernet.in:1805/default/login.json?userid="+username+"&password="+password;
+        String url = "http://192.168.1.171:8000/default/login.json?userid="+username+"&password="+password;
         boolean cancel = false;
         View focusView = null;
 
@@ -140,7 +140,7 @@ public class Log_In extends AppCompatActivity {
                 public void onErrorResponse(VolleyError volleyError) {
                     showProgress(false);
                     System.out.println("doesn't get to the link");
-                    Toast.makeText(Log_In.this, volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(Log_In.this, "No Internet Connection", Toast.LENGTH_LONG).show();
                 }
             });
             /*RequestQueue requestQueue = Volley.newRequestQueue(this);

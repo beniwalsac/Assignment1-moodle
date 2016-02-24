@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -20,12 +21,14 @@ public class Overview extends ListFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.overview, container,
                 false);
+        TextView tv = (TextView) rootView.findViewById(R.id.tv);
+        tv.setText("Overview");
         return rootView;
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        String[] values = new String[] { "Message1", "Message2", "Message3" };
+        String[] values = new String[] { "Here's a cool app to use Moodle on your android device" };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);

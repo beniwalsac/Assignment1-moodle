@@ -131,7 +131,7 @@ public class HomePage extends AppCompatActivity
         }
         else if (id == R.id.Grades) {
             fragment = new Grades();
-            String url = "http://tapi.cse.iitd.ernet.in:1805/default/grades.json";
+            String url = "http://192.168.1.171:8000/default/grades.json";
             /*RequestQueue requestQueue = Volley.newRequestQueue(this);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
@@ -164,7 +164,7 @@ public class HomePage extends AppCompatActivity
         }
         else if (id == R.id.Notifications) {
             fragment = new Notifications();
-            String url = "http://tapi.cse.iitd.ernet.in:1805/default/notifications.json";
+            String url = "http://192.168.1.171:8000/default/notifications.json";
             NetworkController.getInstance().functionForVolleyRequest(url, this, new DataCallback() {
                 @Override
                 public void onSuccess(String result) {
@@ -179,7 +179,7 @@ public class HomePage extends AppCompatActivity
         }
         else if (id == R.id.My_Courses) {
             fragment = new My_Courses();
-            String url = "http://tapi.cse.iitd.ernet.in:1805/courses/list.json";
+            String url = "http://192.168.1.171:8000/courses/list.json";
             NetworkController.getInstance().functionForVolleyRequest(url, this, new DataCallback() {
                 @Override
                 public void onSuccess(String result) {
@@ -193,7 +193,7 @@ public class HomePage extends AppCompatActivity
             });
         }
         else if (id == R.id.logout) {
-            String url = "http://tapi.cse.iitd.ernet.in:1805/default/logout.json";
+            String url = "http://192.168.1.171:8000/default/logout.json";
             NetworkController.getInstance().functionForVolleyRequest(url, this, new DataCallback() {
                 @Override
                 public void onSuccess(String result) {

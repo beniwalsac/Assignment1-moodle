@@ -1,18 +1,12 @@
 package aurora.app_moodle;
 
 import android.os.Bundle;
-import android.provider.Telephony;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 
@@ -26,12 +20,18 @@ import org.json.JSONObject;
 public class CourseStruct extends ListFragment {
 
     View rootview;
-    Bundle data;
     String item;
+    Bundle data;
+    Bundle data0;
+    Bundle data1;
+    Bundle data2;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         data = getArguments();
         item = data.getString("course");
+
+
+
         rootview = inflater.inflate(R.layout.course_struct, container, false);
         return rootview;
     }
@@ -47,10 +47,11 @@ public class CourseStruct extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
 
         if(position == 0) {
-            String url = "http://tapi.cse.iitd.ernet.in:1805/courses/course.json/"+item+"/assignments.json";
+            String url = "http://192.168.1.171:8000/courses/course.json/"+item+"/assignments";
             NetworkController.getInstance().functionForVolleyRequest(url, this.getContext(), new DataCallback() {
                 @Override
                 public void onSuccess(String result) {
+                    data0 = new Bundle();
                     showResponseAssignments(result);
                 }
             }, new ErrorResponse() {
@@ -61,10 +62,11 @@ public class CourseStruct extends ListFragment {
             });
         }
         else if(position == 1) {
-            String url = "http://tapi.cse.iitd.ernet.in:1805/courses/course.json/"+item+"/grades.json";
+            String url = "http://192.168.1.171:8000/courses/course.json/"+item+"/grades";
             NetworkController.getInstance().functionForVolleyRequest(url, this.getContext(), new DataCallback() {
                 @Override
                 public void onSuccess(String result) {
+                    data1 = new Bundle();
                     showResponseGrades(result);
                 }
             }, new ErrorResponse() {
@@ -75,10 +77,11 @@ public class CourseStruct extends ListFragment {
             });
         }
         else if (position==2) {
-            String url = "http://tapi.cse.iitd.ernet.in:1805/courses/course.json/"+item+"/threads.json";
+            String url = "http://192.168.1.171:8000/courses/course.json/"+item+"/threads";
             NetworkController.getInstance().functionForVolleyRequest(url, this.getContext(), new DataCallback() {
                 @Override
                 public void onSuccess(String result) {
+                    data2 = new Bundle();
                     showResponseThreads(result);
                 }
             }, new ErrorResponse() {
@@ -91,27 +94,31 @@ public class CourseStruct extends ListFragment {
     }
 
     private void showResponseAssignments(String response) {
-        Bundle data = new Bundle();
         JSONArray assignments;
-        String[] assg_array;
+        String[] assg_array , assg_id;
         try {
             JSONObject jsonObject = new JSONObject(response);
             assignments = jsonObject.getJSONArray("assignments");
             if(assignments == null || assignments.length() == 0) {
-                data.putString("Empty", "NO ASSIGNMENTS TO SHOW");
+                data0.putString("Empty", "NO ASSIGNMENTS TO SHOW");
+                data0.putString("course", item);
             }
             else {
                 assg_array = new String[assignments.length()];
+                assg_id = new String[assignments.length()];
                 for (int i=0;i<assg_array.length;i++) {
                     assg_array[i] = assignments.getJSONObject(i).getString("name");
+                    assg_id[i] = assignments.getJSONObject(i).getString("id");
                 }
-                data.putStringArray("AssgArray", assg_array);
+                data0.putStringArray("AssgArray", assg_array);
+                data0.putStringArray("AssgId", assg_id);
+                data0.putString("course", item);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         Assignments nextFrag= new Assignments();
-        nextFrag.setArguments(data);
+        nextFrag.setArguments(data0);
         this.getFragmentManager().beginTransaction()
                 .replace(R.id.section_label, nextFrag, null)
                 .addToBackStack(null)
@@ -119,14 +126,13 @@ public class CourseStruct extends ListFragment {
     }
 
     private void showResponseGrades(String response) {
-        Bundle data = new Bundle();
         JSONArray grades;
         String[] grade_array;
         try {
             JSONObject jsonObject = new JSONObject(response);
             grades = jsonObject.getJSONArray("grades");
             if(grades == null || grades.length() == 0) {
-                data.putString("Empty", "NO GRADES TO SHOW");
+                data1.putString("Empty", "NO GRADES TO SHOW");
             }
             else {
                 grade_array = new String[grades.length()];
@@ -134,13 +140,13 @@ public class CourseStruct extends ListFragment {
                     JSONObject g = grades.getJSONObject(i-1);
                     grade_array[i-1] = i+"."+"    "+g.getString("name")+"\n"+"       Score:-  "+g.getString("score")+"/"+g.getString("out_of")+"\n"+"       Weightage:-  "+g.getString("weightage");
                 }
-                data.putStringArray("GradeArray", grade_array);
+                data1.putStringArray("GradeArray", grade_array);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         Grades nextFrag= new Grades();
-        nextFrag.setArguments(data);
+        nextFrag.setArguments(data1);
         this.getFragmentManager().beginTransaction()
                 .replace(R.id.section_label, nextFrag, null)
                 .addToBackStack(null)
@@ -148,14 +154,14 @@ public class CourseStruct extends ListFragment {
     }
 
     private void showResponseThreads(String response) {
-        Bundle data = new Bundle();
         JSONArray threads;
         String[] thread_array;
         try {
             JSONObject jsonObject = new JSONObject(response);
             threads = jsonObject.getJSONArray("course_threads");
             if(threads == null || threads.length() == 0) {
-                data.putString("Empty", "NO THREADS TO SHOW");
+                data2.putString("Empty", "NO THREADS TO SHOW");
+                data2.putString("course", item);
             }
             else {
                 thread_array = new String[threads.length()];
@@ -163,13 +169,14 @@ public class CourseStruct extends ListFragment {
                     JSONObject g = threads.getJSONObject(i-1);
                     thread_array[i-1] = i+"."+"    "+g.getString("title")+"\n"+"          "+g.getString("updated_at");
                 }
-                data.putStringArray("ThreadArray", thread_array);
+                data2.putStringArray("ThreadArray", thread_array);
+                data2.putString("course", item);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         Threads nextFrag= new Threads();
-        nextFrag.setArguments(data);
+        nextFrag.setArguments(data2);
         this.getFragmentManager().beginTransaction()
                 .replace(R.id.section_label, nextFrag, null)
                 .addToBackStack(null)

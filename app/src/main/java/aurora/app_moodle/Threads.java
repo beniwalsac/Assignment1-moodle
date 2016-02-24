@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 /**
  * Created by beniw on 24/02/2016.
@@ -16,6 +17,8 @@ public class Threads extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         data = getArguments();
         View rootview = inflater.inflate(R.layout.my_courses, container, false);
+        TextView tv = (TextView) rootview.findViewById(R.id.tv);
+        tv.setText("Threads");
         return rootview;
     }
 
