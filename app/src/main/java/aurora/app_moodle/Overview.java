@@ -25,7 +25,7 @@ public class Overview extends ListFragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        String[] values = new String[] { "Message1", "Message2", "Message3" };
+        String[] values = new String[] { "Here's a cool app to use Moodle on your android device" };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);

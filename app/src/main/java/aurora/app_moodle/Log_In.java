@@ -140,7 +140,7 @@ public class Log_In extends AppCompatActivity {
                 public void onErrorResponse(VolleyError volleyError) {
                     showProgress(false);
                     System.out.println("doesn't get to the link");
-                    Toast.makeText(Log_In.this, volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(Log_In.this, "No Internet Connection", Toast.LENGTH_LONG).show();
                 }
             });
             /*RequestQueue requestQueue = Volley.newRequestQueue(this);

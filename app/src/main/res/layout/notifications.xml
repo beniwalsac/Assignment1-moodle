@@ -4,8 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@android:id/empty"
+        android:text="Notifications"
+        android:paddingTop="10dp"
+        android:paddingBottom="15dp"
+        android:background="#dcd7d7"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:textSize="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </TextView>
+
     <ListView
         android:id="@android:id/list"
+        android:background="#ffffff"
+        android:layout_marginTop="15dp"
+        android:dividerHeight="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
