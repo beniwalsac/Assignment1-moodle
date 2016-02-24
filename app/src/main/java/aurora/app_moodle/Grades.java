@@ -34,13 +34,13 @@ public class Grades extends ListFragment {
        if(data.getString("Empty") == "NO GRADES TO SHOW") {
            String[] values = new String[1];
            values[0] = data.getString("Empty");
-           ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+           ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                    android.R.layout.simple_list_item_1, values);
            setListAdapter(adapter);
        }
        else {
            String[] values = data.getStringArray("GradeArray");
-           ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+           ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                    android.R.layout.simple_list_item_1, values);
            setListAdapter(adapter);
        }

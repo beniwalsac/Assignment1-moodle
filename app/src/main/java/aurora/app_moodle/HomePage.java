@@ -49,9 +49,6 @@ public class HomePage extends AppCompatActivity
     public static JSONObject user_data;
 
     ArrayList<String> courseList,gradeList;
-
-
-
     ListFragment fragment = null;
 
     @Override
@@ -180,6 +177,21 @@ public class HomePage extends AppCompatActivity
                 }
             });
         }
+        else if (id == R.id.My_Courses) {
+            fragment = new My_Courses();
+            String url = "http://tapi.cse.iitd.ernet.in:1805/courses/list.json";
+            NetworkController.getInstance().functionForVolleyRequest(url, this, new DataCallback() {
+                @Override
+                public void onSuccess(String result) {
+                    showMyCourses(result);
+                }
+            }, new ErrorResponse() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    Toast.makeText(HomePage.this, "There is something wrong with the connection.", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
         else if (id == R.id.logout) {
             String url = "http://tapi.cse.iitd.ernet.in:1805/default/logout.json";
             NetworkController.getInstance().functionForVolleyRequest(url, this, new DataCallback() {
@@ -193,12 +205,6 @@ public class HomePage extends AppCompatActivity
                     Toast.makeText(HomePage.this, "There is something wrong with the connection.", Toast.LENGTH_LONG).show();
                 }
             });
-        }
-        else if (id == R.id.nav_share) {
-
-        }
-        else if (id == R.id.nav_send) {
-
         }
         return true;
     }
@@ -252,6 +258,39 @@ public class HomePage extends AppCompatActivity
                     notif_array[i - 1] = i + "." + "    " + c.getString("description") + "\n" + "          " + c.getString("created_at");
                 }
                 data.putStringArray("NotifArray",notif_array);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        fragment.setArguments(data);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.section_label, fragment).commit();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
+    private void showMyCourses(String response) {
+        Bundle data = new Bundle();
+        JSONArray courses;
+        String[] course_name,course_code;
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            courses = jsonObject.getJSONArray("courses");
+            if(courses == null || courses.length() == 0) {
+                data.putString("Empty", "NO COURSES TO SHOW");
+            }
+            else {
+                course_code = new String[courses.length()];
+                course_name = new String[courses.length()];
+                for (int i=0;i<courses.length();i++) {
+                    JSONObject c = courses.getJSONObject(i);
+                    course_code[i] = c.getString("code");
+                    course_name[i] = c.getString("name");
+                }
+                data.putStringArray("CourseCode",course_code);
+                data.putStringArray("CourseName",course_name);
             }
         } catch (JSONException e) {
             e.printStackTrace();
