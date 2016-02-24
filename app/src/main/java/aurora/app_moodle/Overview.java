@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -20,6 +21,8 @@ public class Overview extends ListFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.overview, container,
                 false);
+        TextView tv = (TextView) rootView.findViewById(R.id.tv);
+        tv.setText("Overview");
         return rootView;
     }
 

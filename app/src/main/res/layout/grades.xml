@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@android:id/empty"
-        android:text="Grades"
+        android:id="@+id/tv"
         android:paddingTop="10dp"
         android:paddingBottom="15dp"
-        android:background="#dcd7d7"
-        android:textAlignment="center"
         android:gravity="center_horizontal"
-        android:textSize="40dp"
+        android:textSize="40sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </TextView>
@@ -20,7 +17,7 @@
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:dividerHeight="3dp"
+        android:layout_marginTop="65dp"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+</RelativeLayout>

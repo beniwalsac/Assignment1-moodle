@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -25,6 +26,8 @@ public class My_Courses extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         data = getArguments();
         View rootview = inflater.inflate(R.layout.my_courses, container, false);
+        TextView tv = (TextView) rootview.findViewById(R.id.tv);
+        tv.setText("Course List");
         return rootview;
     }
 

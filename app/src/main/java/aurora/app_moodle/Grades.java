@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -26,6 +27,8 @@ public class Grades extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         data = getArguments();
         View rootview = inflater.inflate(R.layout.grades, container, false);
+        TextView tv = (TextView) rootview.findViewById(R.id.tv);
+        tv.setText("Grades");
         return rootview;
     }
    @Override
