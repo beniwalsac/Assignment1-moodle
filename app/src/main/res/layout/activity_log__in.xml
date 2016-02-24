@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="aurora.moodle.Log_In">
+    tools:context="aurora.app_moodle+.Log_In">
 
     <!-- Login progress -->
     <ProgressBar
@@ -17,6 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="160dp"
         android:visibility="gone" />
 
     <ScrollView
@@ -25,20 +27,21 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/email_login_form"
+            android:id="@+id/username_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <AutoCompleteTextView
-                    android:id="@+id/email"
+                    android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/prompt_username"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -66,13 +69,13 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Remember username"
+                android:text="@string/checkbox_text"
                 android:textSize="20dp"
                 android:layout_marginTop="16dp"
                 android:id="@+id/checkBox" />
 
             <Button
-                android:id="@+id/email_sign_in_button"
+                android:id="@+id/username_sign_in_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,12 +84,13 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/hyper_link"
+                android:layout_width="360dp"
                 android:layout_height="wrap_content"
                 android:text="@string/hyperlink"
-                android:id="@+id/textView"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginLeft="0dp"
                 android:textColor="#021ef4"/>
 
         </LinearLayout>
